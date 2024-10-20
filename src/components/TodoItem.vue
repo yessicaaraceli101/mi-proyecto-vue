@@ -1,33 +1,27 @@
 <template>
     <!-- Contenedor principal del ítem de tarea -->
-    <div>
+    <div class="todo-item">
         <!-- Contenedor del título y el estado de la tarea -->
-        <div>
+        <div class="todo-header">
             <!-- Muestra el título de la tarea y aplica un estilo tachado si la tarea está completada -->
-            <!-- Comentario: Cambia este estilo o agrega clases personalizadas -->
-            <h5 :style="{ textDecoration: completed ? 'line-through' : 'none' }">
+            <h5 :class="{ completed: completed }">
                 {{ title }}
             </h5>
 
             <!-- Muestra si la tarea está Completada o Pendiente -->
-            <!-- Comentario: Puedes cambiar este texto o agregar etiquetas visuales (por ejemplo, con colores o iconos) -->
-            <span>
+            <span class="status">
                 {{ completed ? 'Completada' : 'Pendiente' }}
             </span>
         </div>
 
         <!-- Contenedor de botones de acción -->
-        <div>
+        <div class="todo-actions">
             <!-- Botón para marcar la tarea como completada o pendiente -->
-            <!-- Emite el evento 'toggle-completion' para indicar que se cambió el estado de la tarea -->
-            <!-- Comentario: Personaliza el texto, estilo o reemplaza con un ícono (ej. ✔ / ✘) -->
             <button @click="$emit('toggle-completion')">
                 Marcar como {{ completed ? 'Pendiente' : 'Completada' }}
             </button>
 
             <!-- Botón para eliminar la tarea de la lista -->
-            <!-- Emite el evento 'delTodo' para indicar que se debe eliminar esta tarea -->
-            <!-- Comentario: Modifica el estilo, el texto, o reemplaza con un ícono como una papelera -->
             <button @click="$emit('delTodo')">
                 Eliminar
             </button>
@@ -41,7 +35,6 @@ export default {
     name: 'TodoItem',
 
     // Define las propiedades que este componente recibirá del componente padre
-    // Comentario: Puedes agregar más propiedades si es necesario (por ejemplo, 'dueDate' para la fecha de vencimiento)
     props: {
         title: String,      // Título de la tarea
         completed: Boolean, // Estado de la tarea (completada o pendiente)
@@ -50,7 +43,48 @@ export default {
 </script>
 
 <style scoped>
-/* Puedes agregar tus propios estilos aquí */
-/* Por ejemplo, cambia el color de fondo de las tareas completadas */
+.todo-item {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
 
+.todo-item:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888; /* Color del texto de tareas completadas */
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status {
+    font-size: 0.9em;
+    color: #777; /* Color del texto del estado */
+}
+
+.todo-actions {
+    margin-top: 10px;
+}
+
+.todo-actions button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.todo-actions button:hover {
+    background-color: #e0e0e0; /* Color de fondo al pasar el mouse */
+}
 </style>
